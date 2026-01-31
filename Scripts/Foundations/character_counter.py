@@ -5,7 +5,7 @@ def count_characters(text):
             character_dict[character] = 1
         else:
             character_dict[character] += 1
-    print(character_dict)
+
     return character_dict
 
 
