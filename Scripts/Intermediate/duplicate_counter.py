@@ -1,15 +1,12 @@
 def count_duplicates(string):
-    string_lower = string.lower()
+    string = string.lower()
     repeat_dict = {}
     count = 0
-    for char in string_lower:
-        if char not in repeat_dict:
-            repeat_dict[char] = 1
-        else:
-            repeat_dict[char] += 1
-    for value in repeat_dict:       
-        if repeat_dict.get(value) > 1:     
-            count += 1
-    print(count)
-    return count
+    for char in string:
+      repeat_dict[char] = repeat_dict.get(char, 0) + 1
+      duplicates_total = 0
+    for key in repeat_dict.values():
+      if key > 1:
+      count += 1
+return count
 
