@@ -33,18 +33,16 @@ def get_config():
     """
     try:
         with open("app_config.txt", "r") as text_file:
-            if not text_file:
-                pass
             dirty_file = text_file.read()
             clean_file = dirty_file.replace(":", "=")
             target_split = clean_file.split("=")
-            app = target_split[1]
+            app = target_split[1].strip()
             return app
     except FileNotFoundError:
         print("Error: The file 'app_config.txt' was not found.")
         sys.exit(1)
     except IndexError:
-        print("Error: Index Error, file empty")
+        print("Error: Configuration file is empty or missing a valid separator.")
         sys.exit(1)
 
 def run_audit(app):
@@ -76,25 +74,25 @@ def run_audit(app):
             parse_data = json.load(json_file)
             audit_list = []
             matches = []
+            
             for server in parse_data:
-                audit_list.append("Auditing...")
-                if "malformed" in server["ip"]:
-                    audit_list.append(
-                        f"WARNING: Malformed IP detected for server: {server["server_id"]}")
-                elif app not in server["apps"]:
-                    audit_list.append(
-                        f"Match not found: {server["server_id"]}")
-                    pass
-                elif app in server["apps"]:
-                    matches.append(f"{server["server_id"]}: {server["ip"]}")
-                    audit_list.append(f"Found match: {server["server_id"]}")
+                audit_list.append(f"Auditing server {server.get('server_id')}...")
+                
+                # Validation check for malformed system data
+                if "malformed" in server.get("ip", ""):
+                    audit_list.append(f"WARNING: Malformed IP detected for server: {server.get('server_id')}")
+                elif app in server.get("apps", []):
+                    matches.append({"server_id": server["server_id"], "ip": server["ip"]})
+                    audit_list.append(f"Found match: {server['server_id']}")
+                else:
+                    audit_list.append(f"Match not found: {server['server_id']}")
 
         with open("devops_audit.log", "w") as log:
             for line in audit_list:
-                log.write(f"{line} \n")
+                log.write(f"{line}\n")
 
         with open("audit_report.json", "w") as report:
-            json.dump(matches, report)
+            json.dump(matches, report, indent=4)
 
     except FileNotFoundError:
         print("Error: The file 'inventory.json' was not found.")
@@ -103,4 +101,4 @@ def run_audit(app):
 
 if __name__ == "__main__":
     target_app = get_config()
-    run_audit(target_app)
+    run_audit(target_app))
