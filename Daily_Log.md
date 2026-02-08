@@ -2,6 +2,7 @@
 
 | Date | Topic | Key Concepts |
 | :--- | :--- | :--- |
+| [**07 Feb 2026**](./Logs/2026-02-07-Subprocess-System-Interaction.md) | **Subprocess & System Interaction** | `subprocess.run()`, `sys.argv`, `capture_output`, `check=True` |
 | [**06 Feb 2026**](./Logs/2026-02-06-Modular-Auditing-Logic.md) | **Modular Log Auditing** | sys.exit(), return, try/except, Modularity |
 | [**03 Feb 2026**](./Logs/2026-02-03-JSON-Parsing.md) | **JSON Parsing & Data Aggregation** | json.load, List vs. Dict, Exception Handling, Comprehensions |
 | [**01 Feb 2026**](./Logs/2026-02-01-File-IO.md) | **File I/O & Log Parsing** | `re.search`, `with open()`, Guard Clauses |
